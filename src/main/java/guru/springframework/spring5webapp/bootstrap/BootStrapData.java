@@ -24,27 +24,44 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+        System.out.println("Started in Bootstrap");
+
+        Publisher publisher = new Publisher();
+        publisher.setName("OReilly");
+        publisher.setCity("NY");
+        publisher.setState("NY");
+        //NOTE: Need to save publisher entity here BEFORE the book "ddd" (which includes instance of this publisher) is saved in line below
+        publisherRepository.save(publisher);
+
+        System.out.println("Publisher Count: " + publisherRepository.count());
+
         Author eric = new Author("Eric", "Evans");
         Book ddd = new Book("Domain Driven Design", "123123");
         eric.getBooks().add(ddd);
         ddd.getAuthors().add(eric);
 
+        ddd.setPublisher(publisher);
+        publisher.getBooks().add(ddd);
+
+        //NOTE: Need to save author entity here BEFORE the book "ddd" (which includes instance of this publisher) is saved in line below
         authorRepository.save(eric);
         bookRepository.save(ddd);
+        publisherRepository.save(publisher); //this can be commented, so only next saving of publisher would remain
 
         Author rod = new Author("Rod", "Johnson");
         Book noEJB = new Book("J2EE Development with EJB", "23151235");
         rod.getBooks().add(noEJB);
         noEJB.getAuthors().add(rod);
 
+        noEJB.setPublisher(publisher);
+        publisher.getBooks().add(noEJB);
+
         authorRepository.save(rod);
         bookRepository.save(noEJB);
+        publisherRepository.save(publisher);
 
-        System.out.println("Started in Bootstrap");
         System.out.println("Number of Books: " + bookRepository.count());
-
-        Publisher pub = new Publisher("OReilly", "5th avenu", "NY", "NY", 12345);
-        publisherRepository.save(pub);
-        System.out.println("Number of publishers: " + publisherRepository.count());
+        System.out.println("Publisher of Books: " + publisher.getBooks().size());
     }
 }
