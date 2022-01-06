@@ -19,11 +19,12 @@ public class BookController {
 
     @RequestMapping("/books")
     public String getBooks(Model model){
-
-        model.addAttribute("books", bookRepository.findAll());
+        //Name of this attribute will be used by the Thymeleaf to get data for the thymeleaf template, used to represent this data.
         //Need to return "books/list", because there is "books" directory under "resources/templates", and there is a "list.html" file
         //So, "books" sub-directory and "list" template-file -> "books/list" path
         //This is how the Thymeleaf finds the template to render to html
+        model.addAttribute("books", bookRepository.findAll());
+
         return "books/list";
     }
 }
