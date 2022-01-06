@@ -28,9 +28,9 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("Started in Bootstrap");
 
         Publisher publisher = new Publisher();
-        publisher.setName("OReilly");
-        publisher.setCity("NY");
-        publisher.setState("NY");
+        publisher.setName("SFG Publishing");
+        publisher.setCity("St Petersburg");
+        publisher.setState("FL");
         //NOTE: Need to save publisher entity here BEFORE the book "ddd" (which includes instance of this publisher) is saved in line below
         publisherRepository.save(publisher);
 
@@ -50,7 +50,7 @@ public class BootStrapData implements CommandLineRunner {
         publisherRepository.save(publisher); //this can be commented, so only next saving of publisher would remain
 
         Author rod = new Author("Rod", "Johnson");
-        Book noEJB = new Book("J2EE Development with EJB", "23151235");
+        Book noEJB = new Book("J2EE Development without EJB", "3939459459");
         rod.getBooks().add(noEJB);
         noEJB.getAuthors().add(rod);
 
@@ -62,6 +62,6 @@ public class BootStrapData implements CommandLineRunner {
         publisherRepository.save(publisher);
 
         System.out.println("Number of Books: " + bookRepository.count());
-        System.out.println("Publisher of Books: " + publisher.getBooks().size());
+        System.out.println("Publisher Number of Books: " + publisher.getBooks().size());
     }
 }
