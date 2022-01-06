@@ -21,7 +21,9 @@ public class BookController {
     public String getBooks(Model model){
 
         model.addAttribute("books", bookRepository.findAll());
-
-        return "books";
+        //Need to return "books/list", because there is "books" directory under "resources/templates", and there is a "list.html" file
+        //So, "books" sub-directory and "list" template-file -> "books/list" path
+        //This is how the Thymeleaf finds the template to render to html
+        return "books/list";
     }
 }
